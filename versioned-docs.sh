@@ -28,12 +28,15 @@ fi
 
 mkdir -p target
 git clone "$REMOTE" -b master target/versioned-docs
-cp -R \
-  target/versioned-docs/versioned_docs \
-  target/versioned-docs/versioned_sidebars \
-  target/versioned-docs/versions.json \
-  "$WEBSITE_DIR/"
-
+if [ -d target/versioned-docs/versioned_docs ]; then
+  cp -R target/versioned-docs/versioned_docs "$WEBSITE_DIR/"
+fi
+if [ -d target/versioned-docs/versioned_sidebars ]; then
+  cp -R target/versioned-docs/versioned_sidebars "$WEBSITE_DIR/"
+fi
+if [ -f target/versioned-docs/versions.json ]; then
+  cp target/versioned-docs/versions.json "$WEBSITE_DIR/"
+fi
 
 if [ "$UPDATE" = 1 ]; then
   git config user.name "Travis-CI"
