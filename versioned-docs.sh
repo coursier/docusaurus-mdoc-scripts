@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-set -ev
+set -euv
 
 if [ $# = 0 ]; then
   UPDATE=0
