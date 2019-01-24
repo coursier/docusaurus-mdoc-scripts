@@ -18,11 +18,15 @@ git config user.email "invalid@travis-ci.com"
 echo "Cleaning-up gh-pages"
 mkdir .tmp
 while read i; do
-  git mv "$i" .tmp/
+  if [ -e "$i" ]; then
+    git mv "$i" .tmp/
+  fi
 done < <(cat .keep)
 git rm -r *
 while read i; do
-  git mv ".tmp/$i" .
+  if [ -e ".tmp/$i" ]; then
+    git mv ".tmp/$i" .
+  fi
 done < <(cat .keep)
 rmdir .tmp
 
