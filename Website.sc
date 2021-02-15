@@ -17,7 +17,7 @@ final case class Mdoc(
 
   private def run0(watch: Boolean = false): Unit = {
     val cmd = Seq(
-      "coursier",
+      "cs",
       "launch",
       "--scala-version", scalaVersion,
       s"org.scalameta::mdoc:$mdocVersion"
