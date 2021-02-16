@@ -12,8 +12,8 @@ echo "Cloning"
 git clone "https://${GH_TOKEN}@github.com/$REPO.git" -q -b gh-pages target/gh-pages
 cd target/gh-pages
 
-git config user.name "Travis-CI"
-git config user.email "invalid@travis-ci.com"
+git config user.name "Github Actions"
+git config user.email "actions@github.com"
 
 echo "Cleaning-up gh-pages"
 mkdir .tmp
