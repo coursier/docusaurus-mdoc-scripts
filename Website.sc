@@ -130,6 +130,9 @@ object Util {
     b.redirectError(ProcessBuilder.Redirect.INHERIT)
     System.err.println(s"Running ${cmd.mkString(" ")}")
     val p = b.start()
+
+    // Closing stdin so that sbt doesn't wait indefinitely for input
+    p.getOutputStream.close()
   
     // inspired by https://stackoverflow.com/a/16714180/3714539
     val reader = new BufferedReader(new InputStreamReader(p.getInputStream))
