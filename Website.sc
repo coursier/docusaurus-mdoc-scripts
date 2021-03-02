@@ -56,7 +56,7 @@ final case class Mdoc(
 
 object Util {
   def waitForDir(dir: File): Unit = {
-  
+
     @tailrec
     def helper(): Unit = {
       val found =
@@ -64,13 +64,13 @@ object Util {
           assert(dir.isDirectory)
           dir.listFiles().nonEmpty
         }
-  
+
       if (!found) {
         Thread.sleep(200L)
         helper()
       }
     }
-  
+
     helper()
   }
 
@@ -91,12 +91,12 @@ object Util {
     dir: File = new File("."),
     waitFor: () => Unit = null
   )(f: => T): T = {
-  
+
     val b = new ProcessBuilder(cmd: _*)
     b.inheritIO()
     b.directory(dir)
     var p: Process = null
-  
+
     Option(waitFor) match {
       case Some(w) =>
         val t = new Thread("wait-for-condition") {
@@ -112,7 +112,7 @@ object Util {
         System.err.println(s"Running ${cmd.mkString(" ")}")
         p = b.start()
     }
-  
+
     try f
     finally {
       p.destroy()
@@ -124,7 +124,7 @@ object Util {
   def outputOf(cmd: Seq[String]): String = {
     // stuff in scala.sys.process should allow to do that in a straightforward way
     // not using it here to circumvent https://github.com/scala/bug/issues/9824
-    
+
     val b = new ProcessBuilder(cmd: _*)
     b.redirectOutput(ProcessBuilder.Redirect.PIPE)
     b.redirectError(ProcessBuilder.Redirect.INHERIT)
@@ -133,7 +133,7 @@ object Util {
 
     // Closing stdin so that sbt doesn't wait indefinitely for input
     p.getOutputStream.close()
-  
+
     // inspired by https://stackoverflow.com/a/16714180/3714539
     val reader = new BufferedReader(new InputStreamReader(p.getInputStream))
     val builder = new StringBuilder
