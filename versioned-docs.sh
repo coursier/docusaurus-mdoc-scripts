@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 set -euv
 
+# TODO Convert to mill tasks
+
 if [ $# = 0 ]; then
   UPDATE=0
 elif [ $# = 1 ]; then
@@ -16,7 +18,8 @@ else
 fi
 
 if [ "$UPDATE" = 1 ]; then
-  if [[ ${TRAVIS_TAG} != v* ]]; then
+  TAG="$(git describe --exact-match --tags --always "$(git rev-parse HEAD)")"
+  if [[ ${TAG} != v* ]]; then
     echo "Not on a git tag"
     exit 1
   fi
@@ -42,7 +45,7 @@ if [ "$UPDATE" = 1 ]; then
   git config user.name "Travis-CI"
   git config user.email "invalid@travis-ci.com"
 
-  VERSION="$(echo "$TRAVIS_TAG" | sed 's@^v@@')"
+  VERSION="$(echo "$TAG" | sed 's@^v@@')"
 
   cd "$WEBSITE_DIR"
   yarn run version "$VERSION"
